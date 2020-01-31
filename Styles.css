@@ -1,4 +1,9 @@
+html {
+    background-color: var(--bright);
+}
+
 body {
+    background-color: inherit;
     font-family: Rubik;
     margin: 0;
 }
@@ -15,28 +20,39 @@ body {
     min-width: 100px;
     padding: 30px;
     width: 50%;
-    background-color: #ddd;
+    background-color: var(--darker);
     text-align: center;
+    border-radius: 10px;
 }
 
 input[type=text], select {
     width: 100%;
-    padding: 12px 20px;
+    padding: 20px 0px;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 0px solid var(--pink);
     border-radius: 4px;
     box-sizing: border-box;
+    color: var(--black);
     margin-left: auto;
     margin-right: auto;
     font-family: Rubik;
+    background-color: var(--white);
+    text-align:center;
 }
 
 .Button {
     width: 100%;
-    padding: 12px 20px;
+    padding: 20px 20px;
     display: inline-block;
     border-radius: 4px;
     font-family: Rubik;
+    color: var(--black);
+    border: 0px solid black;
+    background-color: var(--pink);
+}
+
+.Button:hover {
+    background-color: var(--pink-light);
 }
 
 .Tab {
@@ -70,6 +86,17 @@ input[type=text], select {
     border: 0px solid #ccc;
     border-top: none;
     animation: fadeIn 1s;
+}
+
+:root {
+    --white: #f5f4ef;
+    --bright: #EAE7DC;
+    --darker: #D8C3A5;
+    --black: #41403e;
+    --gray: #8E8D8A;
+    --pink: #E98074;
+    --pink-light: #ea8b80;
+    --red: #E85A4F;
 }
 
 @keyframes fadeIn {
