@@ -64,8 +64,9 @@ input[type=text], select {
 
 .Tab {
     overflow: hidden;
-    border: 0px solid #ccc;
-    background-color: #f1f1f1;
+    border: 0px solid var(--bright);
+    background-color: var(--darker);
+    color: var(--black);
     width: 100%;
 }
 
@@ -77,14 +78,18 @@ input[type=text], select {
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
+    font-size: 1.2em;
+    font-family: inherit;
+    color: var(--black);
+
 }
 
     .TabButton:hover {
-        background-color: #ddd;
+        background-color: var(--bright);
     }
 
     .TabButton:active {
-        background-color: #ccc;
+        background-color: var(--bright);
     }
 
 .TabContent {
