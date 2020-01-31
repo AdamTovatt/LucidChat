@@ -1,6 +1,6 @@
 class Api {
     constructor() {
-        this.basePath = "https://virtual-greeting.herokuapp.com/";
+        this.basePath = "https://lucidchat.herokuapp.com/";
     }
 
     async GetResponse(method, url, data = null) {
@@ -27,22 +27,48 @@ class Api {
         });
     }
 
-    async Init() {
-        var path = "greeting/init";
+    async CleanDatabase() {
+        var path = "database/clean";
         return await this.GetResponse("POST", path);
     }
 
-    async GetGreetingData(id, hash) {
-        var path = "greeting/view/?id=" + id + "&hash=" + hash;
+    async CreateChat(alphaId, betaId) {
+        var path = "chat/create";
+        return await this.GetResponse("POST", path, { alphaId, betaId });
+    }
+
+    async UserTyping(chatId, userId) {
+        var path = "chat/usertyping";
+        return await this.GetResponse("POST", path, { chatId, userId });
+    }
+
+    async SendMessage(chatId, userId, message) {
+        var path = "chat/sendMessage";
+        return await this.GetResponse("POST", path, { chatId, userId, message });
+    }
+
+    async GetChat(chatId) {
+        var path = "chat/get?id=" + chatId;
         return await this.GetResponse("GET", path);
     }
 
-    async UpdateGreetingData(id, hash, data) {
-        var path = "greeting/update/?id=" + id + "&hash=" + hash;
-        if (data.texts)
-            for (var i = 0; i < data.texts.length; i++) {
-                data.texts[i].text = data.texts[i].text.replace("<div>", "").replace("</div>", "");
-            }
-        return await this.GetResponse("POST", path, { greetingdata: data });
+    async GetUserChats(userId) {
+        var path = "users/chats?userId=" + userId;
+        return await this.GetResponse("GET", path);
+    }
+
+    async CreateUser(username) {
+        var path = "users/create";
+        return await this.GetResponse("POST", path, { username });
+    }
+
+    async UserHeartBeat(userId) {
+        var path = "users/heartbeat";
+        return await this.GetResponse("POST", path, { userId });
+    }
+
+    async GetUsers() {
+        var path = "users/get";
+        return await this.GetResponse("GET", path);
     }
 }

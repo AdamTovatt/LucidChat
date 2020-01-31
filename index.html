@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <script type="text/javascript" src="Api.js"></script>
+    <script type="text/javascript" src="Chat.js"></script>
+    <script type="text/javascript" src="ButtonFunctions.js"></script>
+    <link rel="stylesheet" href="Styles.css" />
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div id="Screen_CreateUser" class="Screen"></div>
+    <div id="Screen_Chat" class="Screen">
+        <div class="Tab">
+            <button class="TabButton" onclick="OpenTab(event, 'London')">London</button>
+            <button class="TabButton" onclick="OpenTab(event, 'Paris')">Paris</button>
+        </div>
+
+        <div id="London" class="TabContent">
+            <h3>London</h3>
+            <p>London is the capital city of England.</p>
+        </div>
+        <div id="Paris" class="TabContent">
+            <h3>Paris</h3>
+            <p>Paris is the capital city of France.</p>
+        </div>
+
+    </div>
+</body>
+</html>
