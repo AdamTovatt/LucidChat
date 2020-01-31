@@ -6,13 +6,13 @@ function OpenTab(evt, cityName) {
         tabcontent[i].style.display = "none";
     }
 
-    tablinks = document.getElementsByClassName("TabButton");
+    tablinks = document.getElementsByClassName("ActiveTabButton");
     for (var i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+        tablinks[i].className = tablinks[i].className = "TabButton";
     }
 
     document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
+    evt.currentTarget.className = "ActiveTabButton";
 }
 
 function SubmitName() {

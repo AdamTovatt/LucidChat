@@ -52,6 +52,7 @@ input[type=text], select {
     border: 0px solid black;
     background-color: var(--pink);
     font-size: 1.3em;
+    margin-top: 10px;
 }
 
 .Button:hover {
@@ -81,8 +82,7 @@ input[type=text], select {
     font-size: 1.2em;
     font-family: inherit;
     color: var(--black);
-
-}
+    }
 
     .TabButton:hover {
         background-color: var(--bright);
@@ -92,12 +92,41 @@ input[type=text], select {
         background-color: var(--bright);
     }
 
+.ActiveTabButton {
+    background-color: var(--bright);
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 1.2em;
+    font-family: inherit;
+    color: var(--black);
+}
+
+.ActiveTabButton:hover {
+    background-color: var(--bright);
+}
+
+.ActiveTabButton:active {
+    background-color: var(--bright);
+}
+
 .TabContent {
     display: none;
     padding: 6px 12px;
     border: 0px solid #ccc;
     border-top: none;
     animation: fadeIn 1s;
+}
+
+.UserList {
+    border: 0px solid black;
+    width: 80%;
+    margin-left:auto;
+    margin-right:auto;
+    max-width: 800px;
 }
 
 :root {

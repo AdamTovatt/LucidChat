@@ -11,27 +11,28 @@
 <body>
     <div id="Screen_CreateUser" class="Screen">
         <div class="UsernameBox">
-            <input id="UsernameInput" type="text" placeholder="Namn"/>
-            <br />
-            <br />
+            <input id="UsernameInput" type="text" placeholder="Namn" />
             <button class="Button" onclick="SubmitName()">OK</button>
         </div>
     </div>
     <div id="Screen_Chat" class="Screen">
-        <div class="Tab">
-            <button class="TabButton" onclick="OpenTab(event, 'London')">London</button>
-            <button class="TabButton" onclick="OpenTab(event, 'Paris')">Paris</button>
+        <div id="TabButtons" class="Tab">
+            <button class="TabButton" onclick="OpenTab(event, 'UserList')" id="UserListButton">Användare</button>
         </div>
 
-        <div id="London" class="TabContent">
-            <h3>London</h3>
-            <p>London is the capital city of England.</p>
+        <div id="UserList" class="TabContent">
+            <table class="UserList">
+                <tr>
+                    <td><button class="Button">Göring</button></td>
+                </tr>
+                <tr>
+                    <td><button class="Button">Herman</button></td>
+                </tr>
+                <tr>
+                    <td><button class="Button">Lisette</button></td>
+                </tr>
+            </table>
         </div>
-        <div id="Paris" class="TabContent">
-            <h3>Paris</h3>
-            <p>Paris is the capital city of France.</p>
-        </div>
-
     </div>
 </body>
 </html>
