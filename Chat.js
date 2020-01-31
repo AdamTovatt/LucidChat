@@ -5,7 +5,7 @@ window.onload = function () {
     Screen_CreateUser = document.getElementById("Screen_CreateUser");
     Screen_Chat = document.getElementById("Screen_Chat");
 
-    Screen_Chat.style.display = "block";
+    Screen_CreateUser.style.display = "block";
 
     console.log("test");
 }

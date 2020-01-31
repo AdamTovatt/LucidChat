@@ -7,6 +7,38 @@ body {
     display: none;
 }
 
+.UsernameBox {
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 50px;
+    min-width: 100px;
+    padding: 30px;
+    width: 50%;
+    background-color: #ddd;
+    text-align: center;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Rubik;
+}
+
+.Button {
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border-radius: 4px;
+    font-family: Rubik;
+}
+
 .Tab {
     overflow: hidden;
     border: 0px solid #ccc;

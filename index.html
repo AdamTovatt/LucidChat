@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-US">
 <head>
     <script type="text/javascript" src="Api.js"></script>
@@ -9,7 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div id="Screen_CreateUser" class="Screen"></div>
+    <div id="Screen_CreateUser" class="Screen">
+        <div class="UsernameBox">
+            <input type="text" placeholder="Namn"/>
+            <button class="Button">OK</button>
+        </div>
+    </div>
     <div id="Screen_Chat" class="Screen">
         <div class="Tab">
             <button class="TabButton" onclick="OpenTab(event, 'London')">London</button>
