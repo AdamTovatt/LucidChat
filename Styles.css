@@ -26,7 +26,7 @@ body {
     border-radius: 10px;
 }
 
-input[type=text], select {
+.UsernameInput {
     width: 100%;
     padding: 20px 0px;
     display: inline-block;
@@ -38,7 +38,52 @@ input[type=text], select {
     margin-right: auto;
     font-family: Rubik;
     background-color: var(--white);
-    text-align:center;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.ChatInputArea {
+    position: fixed;
+    width: 100%;
+    background-color: var(--darker);
+    padding: 10px;
+    bottom: 0;
+}
+
+.ChatTextInputContainer {
+    /*padding-right: 100px;*/
+    margin-right: 100px;
+}
+
+.ChatTextInput {
+    max-width: 100%;
+    width: 100%;
+    padding: 10px 10px;
+    display: inline-block;
+    border: 0px solid var(--pink);
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: var(--black);
+    font-family: Rubik;
+    background-color: var(--white);
+    text-align: left;
+    font-size: 1.2em;
+    resize: none;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 20px 10px;
+    display: inline-block;
+    border: 0px solid var(--pink);
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: var(--black);
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Rubik;
+    background-color: var(--white);
+    text-align: left;
     font-size: 1.2em;
 }
 
@@ -55,13 +100,13 @@ input[type=text], select {
     margin-top: 10px;
 }
 
-.Button:hover {
-    background-color: var(--pink-light);
-}
+    .Button:hover {
+        background-color: var(--pink-light);
+    }
 
-.Button:active {
-    background-color: var(--red);
-}
+    .Button:active {
+        background-color: var(--red);
+    }
 
 .Tab {
     overflow: hidden;
@@ -82,7 +127,7 @@ input[type=text], select {
     font-size: 1.2em;
     font-family: inherit;
     color: var(--black);
-    }
+}
 
     .TabButton:hover {
         background-color: var(--bright);
@@ -105,13 +150,13 @@ input[type=text], select {
     color: var(--black);
 }
 
-.ActiveTabButton:hover {
-    background-color: var(--bright);
-}
+    .ActiveTabButton:hover {
+        background-color: var(--bright);
+    }
 
-.ActiveTabButton:active {
-    background-color: var(--bright);
-}
+    .ActiveTabButton:active {
+        background-color: var(--bright);
+    }
 
 .TabContent {
     display: none;
@@ -124,8 +169,8 @@ input[type=text], select {
 .UserList {
     border: 0px solid black;
     width: 80%;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
     max-width: 800px;
 }
 

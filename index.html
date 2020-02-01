@@ -11,7 +11,7 @@
 <body>
     <div id="Screen_CreateUser" class="Screen">
         <div class="UsernameBox">
-            <input id="UsernameInput" type="text" placeholder="Namn" />
+            <input id="UsernameInput" type="input" class="UsernameInput" placeholder="Namn"/>
             <button class="Button" onclick="SubmitName()">OK</button>
         </div>
     </div>
@@ -21,17 +21,13 @@
         </div>
 
         <div id="UserList" class="TabContent">
-            <table class="UserList">
-                <tr>
-                    <td><button class="Button">Göring</button></td>
-                </tr>
-                <tr>
-                    <td><button class="Button">Herman</button></td>
-                </tr>
-                <tr>
-                    <td><button class="Button">Lisette</button></td>
-                </tr>
-            </table>
+            <table class="UserList"></table>
+        </div>
+
+        <div id="ChatInputArea" class="ChatInputArea">
+            <div class="ChatTextInputContainer">
+                <textarea id="ChatTextInput" type="text" class="ChatTextInput" placeholder="..."></textarea>
+            </div>
         </div>
     </div>
 </body>

@@ -14,8 +14,6 @@ window.onload = async function () {
 
     api = new Api();
     await api.CleanDatabase();
-
-    console.log("test");
 }
 
 async function EnterChat(username) {
@@ -81,19 +79,19 @@ async function OpenNewChat(betaName, betaId) {
 
         var button = document.createElement("button");
         button.className = "TabButton";
-        button.onclick = function () { OpenTab(event, "chatt_" + existingChat.id) };
+        button.onclick = function () { OpenTab(event, "chat_" + existingChat.id) };
         button.innerHTML = betaName;
+        button.id = "button_" + existingChat.id;
 
         document.getElementById("TabButtons").appendChild(button);
 
         var div = document.createElement("div");
         div.className = "TabContent";
         div.innerHTML = "En chatt med " + betaName;
-        div.id = "chatt_" + existingChat.id;
+        div.id = "chat_" + existingChat.id;
 
         screen_Chat.appendChild(div);
     }
-    else {
-        setTimeout(function () { document.getElementById("chatt_" + existingChat.id).click(); }, 1000);
-    }
+
+    setTimeout(function () { OpenChatTab(existingChat.id); }, 100);
 }

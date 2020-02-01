@@ -1,4 +1,4 @@
-function OpenTab(evt, cityName) {
+function OpenTab(evt, tabId) {
     var i, tabcontent, tablinks;
 
     tabcontent = document.getElementsByClassName("TabContent");
@@ -11,8 +11,23 @@ function OpenTab(evt, cityName) {
         tablinks[i].className = tablinks[i].className = "TabButton";
     }
 
-    document.getElementById(cityName).style.display = "block";
+    document.getElementById(tabId).style.display = "block";
     evt.currentTarget.className = "ActiveTabButton";
+}
+
+function OpenChatTab(chatId) {
+    var tabcontent = document.getElementsByClassName("TabContent");
+    for (var i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    var tablinks = document.getElementsByClassName("ActiveTabButton");
+    for (var i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className = "TabButton";
+    }
+
+    document.getElementById("chat_" + chatId).style.display = "block";
+    document.getElementById("button_" + chatId).className = "ActiveTabButton";
 }
 
 function SubmitName() {
