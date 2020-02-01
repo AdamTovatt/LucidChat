@@ -71,4 +71,9 @@ class Api {
         var path = "users/get";
         return await this.GetResponse("GET", path);
     }
+
+    async GetUserInfo(id) {
+        var path = "users/getuser?id=" + id;
+        return await this.GetResponse("GET", path);
+    }
 }

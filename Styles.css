@@ -13,6 +13,26 @@ body {
     display: none;
 }
 
+.OwnMessage {
+    float: right;
+    background-color: var(--pink-light);
+    padding: 10px;
+    border-radius: 4px;
+    color: var(--black);
+}
+
+.OtherMessage {
+    float: left;
+    background-color: var(--gray-light);
+    padding: 10px;
+    border-radius: 4px;
+    color: var(--black);
+}
+
+.ChatTable {
+    width: 100%;
+}
+
 .UsernameBox {
     margin-top: 10%;
     margin-left: auto;
@@ -43,6 +63,7 @@ body {
 }
 
 .ChatInputArea {
+    display: none;
     position: fixed;
     width: 100%;
     background-color: var(--darker);
@@ -52,12 +73,17 @@ body {
 
 .ChatTextInputContainer {
     /*padding-right: 100px;*/
-    margin-right: 100px;
+    margin-right: 20px;
+}
+
+.ChatTextInputTable {
+    width: 100%;
 }
 
 .ChatTextInput {
     max-width: 100%;
     width: 100%;
+    height: 5em;
     padding: 10px 10px;
     display: inline-block;
     border: 0px solid var(--pink);
@@ -70,6 +96,28 @@ body {
     font-size: 1.2em;
     resize: none;
 }
+
+.SendButton {
+    width: 100%;
+    height: 4.58em;
+    padding: 5px 5px;
+    display: inline-block;
+    border-radius: 4px;
+    font-family: Rubik;
+    color: var(--black);
+    border: 0px solid black;
+    background-color: var(--pink);
+    font-size: 1.3em;
+    margin-left: 5px;
+}
+
+.SendButton:hover {
+    background-color: var(--pink-light);
+}
+
+    .SendButton:active {
+        background-color: var(--red);
+    }
 
 input[type=text], select {
     width: 100%;
@@ -160,7 +208,7 @@ input[type=text], select {
 
 .TabContent {
     display: none;
-    padding: 6px 12px;
+    padding: 20px;
     border: 0px solid #ccc;
     border-top: none;
     animation: fadeIn 1s;
@@ -180,6 +228,7 @@ input[type=text], select {
     --darker: #D8C3A5;
     --black: #41403e;
     --gray: #8E8D8A;
+    --gray-light: #b4b3b1;
     --pink: #E98074;
     --pink-light: #ea8b80;
     --red: #E85A4F;

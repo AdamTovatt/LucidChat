@@ -1,4 +1,4 @@
-function OpenTab(evt, tabId) {
+function OpenUsersTab(evt, tabId) {
     var i, tabcontent, tablinks;
 
     tabcontent = document.getElementsByClassName("TabContent");
@@ -13,6 +13,8 @@ function OpenTab(evt, tabId) {
 
     document.getElementById(tabId).style.display = "block";
     evt.currentTarget.className = "ActiveTabButton";
+
+    chatInputArea.style.display = "none";
 }
 
 function OpenChatTab(chatId) {
@@ -28,6 +30,11 @@ function OpenChatTab(chatId) {
 
     document.getElementById("chat_" + chatId).style.display = "block";
     document.getElementById("button_" + chatId).className = "ActiveTabButton";
+
+    chatInputArea.style.display = "block";
+    chatInputBox.value = "";
+    currentChat = chatId;
+    LoadCurrentChat();
 }
 
 function SubmitName() {
@@ -48,5 +55,12 @@ function SubmitName() {
     else {
         alert("Ditt namn får inte innehålla specialtecken");
         return;
+    }
+}
+
+async function SendChat() {
+    var response = JSON.parse(await api.SendMessage(currentChat, userId, chatInputBox.value));
+    if (!response["success"]) {
+        alert("Kunde inte skicka medelande");
     }
 }

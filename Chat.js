@@ -1,14 +1,22 @@
 ﻿var screen_CreateUser = null;
 var screen_Chat = null;
 
+var chatInputArea = null;
+var chatInputBox = null;
+
 var api = null;
 var userId = null;
 
+var currentChat = null;
+
 var chats = [];
+var knownAuthors = [];
 
 window.onload = async function () {
     screen_CreateUser = document.getElementById("Screen_CreateUser");
     screen_Chat = document.getElementById("Screen_Chat");
+    this.chatInputArea = this.document.getElementById("ChatInputArea");
+    this.chatInputBox = this.document.getElementById("ChatTextInput");
 
     screen_CreateUser.style.display = "block";
 
@@ -55,6 +63,8 @@ async function EnterChat(username) {
         screen_Chat.style.display = "block";
 
         document.getElementById("UserListButton").click();
+
+        GetUserChats();
     }
     else {
         alert("Okänt fel när användare skulle hämtas");
@@ -73,25 +83,129 @@ async function OpenNewChat(betaName, betaId) {
             alert("Okänt fel när chatt skulle skapas");
             return;
         }
+
         existingChat = { id: createChatResponse["id"], betaId, betaName };
 
         chats.push(existingChat);
 
-        var button = document.createElement("button");
-        button.className = "TabButton";
-        button.onclick = function () { OpenTab(event, "chat_" + existingChat.id) };
-        button.innerHTML = betaName;
-        button.id = "button_" + existingChat.id;
-
-        document.getElementById("TabButtons").appendChild(button);
-
-        var div = document.createElement("div");
-        div.className = "TabContent";
-        div.innerHTML = "En chatt med " + betaName;
-        div.id = "chat_" + existingChat.id;
-
-        screen_Chat.appendChild(div);
+        AddChatButton(existingChat);
     }
 
     setTimeout(function () { OpenChatTab(existingChat.id); }, 100);
+}
+
+function AddChatButton(chat) {
+    var button = document.createElement("button");
+    button.className = "TabButton";
+    var id = chat.id;
+    button.onclick = function () { OpenChatTab(id) };
+    button.innerHTML = chat.betaName;
+    button.id = "button_" + chat.id;
+
+    document.getElementById("TabButtons").appendChild(button);
+
+    var div = document.createElement("div");
+    div.className = "TabContent";
+    //div.innerHTML = "En chatt med " + chat.betaName;
+    div.id = "chat_" + chat.id;
+
+    var chatTable = document.createElement("table");
+    chatTable.id = "chatTable_" + chat.id;
+    chatTable.className = "ChatTable";
+    div.appendChild(chatTable);
+
+    screen_Chat.appendChild(div);
+
+    var chat = GetChatById(chat.id);
+    if (chat)
+        chat.added = true;
+}
+
+function GetChatById(id) {
+    for (var i = 0; i < chats.length; i++) {
+        if (chats[i].id == id)
+            return chats[i];
+    }
+    return null;
+}
+
+async function GetUserChats() {
+    var response = JSON.parse(await api.GetUserChats(userId));
+    if (response["success"]) {
+        for (var i = 0; i < response["message"].length; i++) {
+            var chat = response["message"][i];
+            var existingChat = GetChatById(chat["id"]);
+            if (existingChat && existingChat.added)
+                continue;
+            var otherId = chat["alphaid"] == userId ? chat["betaid"] : chat["alphaid"];
+            var otherName = await GetAuthorName(otherId);
+            otherName = await GetAuthorName(otherId);
+            var newChat = { id: chat["id"], betaId: otherId, betaName: otherName };
+            chats.push(newChat);
+            AddChatButton(newChat);
+        };
+    }
+}
+
+async function LoadCurrentChat() {
+    var chatResponse = JSON.parse(await api.GetChat(currentChat));
+
+    console.log(currentChat);
+    var chatObject = GetChatById(currentChat); //hämtar den sparade chatten från minnet
+    if (!chatObject.lastMessageId) //förbered id för sista medelandet som har ritats ut
+        chatObject.lastMessageId = 0;
+    if (!chatObject.lastLength)
+        chatObject.lastLength = 0; //förbered längd som det var sist vi kollade
+
+    if (chatResponse["success"]) {
+        var currentChatTable = document.getElementById("chatTable_" + currentChat);
+
+        if (chatResponse["message"]["messages"].length > 0 && chatResponse["message"]["messages"].length > chatObject.lastLength) {
+            var betaName = null;
+            for (var i = 0; i < chatResponse["message"]["messages"].length; i++) { //för att hitta namnet på andra personen
+                if (chatResponse["message"]["messages"][i]["authorid"] != userId) {
+                    betaName = await GetAuthorName(chatResponse["message"]["messages"][i]["authorid"]);
+                    break;
+                }
+            }
+
+            for (var i = 0; i < chatResponse["message"]["messages"].length; i++) {
+                var message = chatResponse["message"]["messages"][i];
+                if (message.id > chatObject.lastMessageId) {
+                    var ownMessage = message["authorid"] == userId;
+                    var messageAuthor = ownMessage ? "Du" : betaName; //"Du" används här så att det alltid står det på ens egna medelanden
+                    var messageText = message["textcontent"];
+                    var messageTime = message["senttime"];
+
+                    console.log(messageAuthor + " (" + messageTime + "): " + messageText);
+
+                    var bubble = document.createElement("div");
+                    bubble.className = ownMessage ? "OwnMessage" : "OtherMessage";
+                    bubble.innerHTML = messageText;
+
+                    var row = currentChatTable.insertRow(-1);
+                    row.insertCell(-1).appendChild(bubble);
+
+                    //currentChatTable.appendChild(bubble);
+                }
+                else {
+                    console.log("har redan detta medelande");
+                }
+            }
+
+            chatObject.lastLength = chatResponse["message"]["messages"].length; //uppdaterar den senaste längden
+        }
+    }
+}
+
+async function GetAuthorName(id) {
+    for (var i = 0; i < knownAuthors.length; i++) {
+        if (knownAuthors[i].id == id) {
+            return knownAuthors[i].name;
+        }
+    }
+    var response = JSON.parse(await api.GetUserInfo(id));
+    if (response["success"]) {
+        knownAuthors.push({ name: response["message"]["username"], id: id });
+    }
 }
