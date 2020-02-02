@@ -29,7 +29,7 @@ window.onload = async function () {
     api = new Api();
     await api.CleanDatabase();
 
-    this.document.getElementById("ChatTextInput").addEventListener("keyup", function (event) {
+    this.document.getElementById("ChatTextInput").addEventListener("keydown", function (event) {
         if (!event.shiftKey) {
             if (event.keyCode === 13) {
                 event.preventDefault();
@@ -70,6 +70,7 @@ async function EnterChat(username) {
 
     setCookie("userId", userId, 2);
 
+    OpenUsersTab();
     GetUserChats();
 }
 
@@ -218,27 +219,28 @@ async function LoadCurrentChat() {
         var currentTypingIcon = document.getElementById("chatTyping_" + currentChat);
 
         var typing = chatResponse.message.metadata.alphaid == userId ? chatResponse.message.metadata.betatyping : chatResponse.message.metadata.alphatyping;
-        if (typing) {
+        if (typing != null) {
             var msSinceTyping = new Date() - new Date(typing);
             if (msSinceTyping > 3500) {
-                console.log("hide");
                 var delay = chatObject.lastLength == 0 ? 0 : 500;
                 this.setTimeout(function () { currentTypingIcon.className = "lds-grid-hidden"; }, delay);
                 currentTypingIcon.style.animation = "fadeOut 0.3s linear forwards";
             }
             else {
-                console.log("show");
                 currentTypingIcon.className = "lds-grid";
                 currentTypingIcon.style.animation = "fadeIn 0.3s linear forwards";
             }
         }
+        else {
+            this.setTimeout(function () { currentTypingIcon.className = "lds-grid-hidden"; }, delay);
+        }
 
         for (var i = 0; i < sentBubbles.length; i++) {
-            currentChatTable.deleteRow(sentBubbles[i].rowIndex);
+            document.getElementById("chatTable_" + sentBubbles[i].chatId).deleteRow(sentBubbles[i].rowObject.rowIndex);
         }
         sentBubbles = [];
 
-        if (chatResponse["message"]["messages"].length > 0 && chatResponse["message"]["messages"].length > chatObject.lastLength) {
+        if (chatResponse["message"]["messages"].length > 0) {//&& chatResponse["message"]["messages"].length > chatObject.lastLength) {
             var betaName = null;
             for (var i = 0; i < chatResponse["message"]["messages"].length; i++) { //för att hitta namnet på andra personen
                 if (chatResponse["message"]["messages"][i]["authorid"] != userId) {

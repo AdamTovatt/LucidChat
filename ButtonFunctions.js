@@ -63,17 +63,22 @@ function SubmitName() {
 }
 
 async function SendChat() {
-    var response = JSON.parse(await api.SendMessage(currentChat, userId, chatInputBox.value));
-    if (!response["success"]) {
-        alert("Kunde inte skicka medelande");
-        return;
-    }
-    var text = chatInputBox.value;
-    chatInputBox.value = "";
+    console.log(chatInputBox.value.length);
+    if (chatInputBox.value.length > 0) {
+        var response = JSON.parse(await api.SendMessage(currentChat, userId, chatInputBox.value));
+        if (!response["success"]) {
+            alert("Kunde inte skicka medelande");
+            return;
+        }
+        else {
+            var text = chatInputBox.value;
+            chatInputBox.value = "";
 
-    var row = AddSingleMessage(true, text, document.getElementById("chatTable_" + currentChat), true);
-    sentBubbles.push(row);
-    justSent = true;
+            var row = AddSingleMessage(true, text, document.getElementById("chatTable_" + currentChat), true);
+            sentBubbles.push({ chatId: currentChat, rowObject: row } );
+            justSent = true;
+        }
+    }
 }
 
 async function UserTyped() {
