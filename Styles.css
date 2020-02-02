@@ -270,7 +270,7 @@ input[type=text], select {
     }
 
     100% {
-        opacity: 100;
+        opacity: 1;
     }
 }
 
@@ -280,7 +280,7 @@ input[type=text], select {
     }
 
     100% {
-        opacity: 100;
+        opacity: 1;
     }
 }
 
@@ -290,7 +290,37 @@ input[type=text], select {
     }
 
     100% {
-        opacity: 100;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
     }
 }
 
@@ -324,6 +354,19 @@ input[type=text], select {
     width: 80px;
     height: 80px;
     margin-top: 10px;
+    animation: fadeIn 1s linear forwards;
+    animation-fill-mode: forwards;
+}
+
+.lds-grid-hidden {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+    /*visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;*/
 }
 
     .lds-grid div {

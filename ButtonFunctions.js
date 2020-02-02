@@ -78,7 +78,7 @@ async function SendChat() {
 
 async function UserTyped() {
     var time = new Date() - lastTypeSend;
-    if (time > 1000 * 5) {
+    if (time > 1000 * 3) {
         lastTypeSend = new Date();
         await api.UserTyping(currentChat, userId);
     }

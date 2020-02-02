@@ -155,7 +155,7 @@ function AddChatButton(chat) {
     div.appendChild(chatTable);
 
     screen_Chat.appendChild(div);
-    div.innerHTML += '<div class="lds-grid"><div></div><div></div><div></div>';
+    div.innerHTML += '<div id="chatTyping_' + chat.id + '" class="lds-grid"><div></div><div></div><div></div>';
 
     var chat = GetChatById(chat.id);
     if (chat)
@@ -214,6 +214,23 @@ async function LoadCurrentChat() {
 
     if (chatResponse["success"]) {
         var currentChatTable = document.getElementById("chatTable_" + currentChat);
+        var currentTypingIcon = document.getElementById("chatTyping_" + currentChat);
+
+        var typing = chatResponse.message.metadata.alphaid == userId ? chatResponse.message.metadata.betatyping : chatResponse.message.metadata.alphatyping;
+        if (typing) {
+            var msSinceTyping = new Date() - new Date(typing);
+            if (msSinceTyping > 3500) {
+                console.log("hide");
+                var delay = chatObject.lastLength == 0 ? 0 : 500;
+                this.setTimeout(function () { currentTypingIcon.className = "lds-grid-hidden"; }, delay);
+                currentTypingIcon.style.animation = "fadeOut 0.3s linear forwards";
+            }
+            else {
+                console.log("show");
+                currentTypingIcon.className = "lds-grid";
+                currentTypingIcon.style.animation = "fadeIn 0.3s linear forwards";
+            }
+        }
 
         for (var i = 0; i < sentBubbles.length; i++) {
             currentChatTable.deleteRow(sentBubbles[i].rowIndex);
