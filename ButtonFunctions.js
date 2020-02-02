@@ -62,5 +62,12 @@ async function SendChat() {
     var response = JSON.parse(await api.SendMessage(currentChat, userId, chatInputBox.value));
     if (!response["success"]) {
         alert("Kunde inte skicka medelande");
+        return;
     }
+    var text = chatInputBox.value;
+    chatInputBox.value = "";
+
+    var row = AddSingleMessage(true, text, document.getElementById("chatTable_" + currentChat), true);
+    sentBubbles.push(row);
+    justSent = true;
 }

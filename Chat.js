@@ -12,6 +12,9 @@ var currentChat = null;
 var chats = [];
 var knownAuthors = [];
 
+var justSent = false;
+var sentBubbles = [];
+
 window.onload = async function () {
     screen_CreateUser = document.getElementById("Screen_CreateUser");
     screen_Chat = document.getElementById("Screen_Chat");
@@ -22,11 +25,20 @@ window.onload = async function () {
 
     api = new Api();
     await api.CleanDatabase();
+
+    this.document.getElementById("ChatTextInput").addEventListener("keyup", function (event) {
+        if (!event.shiftKey) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                SendChat();
+            }
+        }
+    });
 }
 
 async function EnterChat(username) {
-    var response = { success: true, id: 19, message: "ok" };
-    //var response = JSON.parse(await api.CreateUser(username));
+    //var response = { success: true, id: 19, message: "ok" };
+    var response = JSON.parse(await api.CreateUser(username));
     if (!response["success"]) {
         if (response.message["code"] == 23505) {
             alert("Det namnet är upptaget just nu");
@@ -65,6 +77,8 @@ async function EnterChat(username) {
         document.getElementById("UserListButton").click();
 
         GetUserChats();
+        this.setInterval(this.GetUserChats, 5000);
+        this.setInterval(this.LoadCurrentChatTick, 4000);
     }
     else {
         alert("Okänt fel när användare skulle hämtas");
@@ -147,10 +161,24 @@ async function GetUserChats() {
     }
 }
 
+function AddSingleMessage(ownMessage, messageText, currentChatTable, animate) {
+    var bubble = document.createElement("div");
+    bubble.className = ownMessage ? "OwnMessage" : "OtherMessage";
+    bubble.innerHTML = messageText;
+
+    var row = currentChatTable.insertRow(-1);
+    row.insertCell(-1).appendChild(bubble);
+
+    if (animate) {
+        bubble.style = "animation: scaleUp 0.2s; animation-timing-function: cubic-bezier(0.1, 0.1, 0.1, 1.0);";
+    }
+
+    return row;
+}
+
 async function LoadCurrentChat() {
     var chatResponse = JSON.parse(await api.GetChat(currentChat));
 
-    console.log(currentChat);
     var chatObject = GetChatById(currentChat); //hämtar den sparade chatten från minnet
     if (!chatObject.lastMessageId) //förbered id för sista medelandet som har ritats ut
         chatObject.lastMessageId = 0;
@@ -159,6 +187,11 @@ async function LoadCurrentChat() {
 
     if (chatResponse["success"]) {
         var currentChatTable = document.getElementById("chatTable_" + currentChat);
+
+        for (var i = 0; i < sentBubbles.length; i++) {
+            currentChatTable.deleteRow(sentBubbles[i].rowIndex);
+        }
+        sentBubbles = [];
 
         if (chatResponse["message"]["messages"].length > 0 && chatResponse["message"]["messages"].length > chatObject.lastLength) {
             var betaName = null;
@@ -177,19 +210,11 @@ async function LoadCurrentChat() {
                     var messageText = message["textcontent"];
                     var messageTime = message["senttime"];
 
-                    console.log(messageAuthor + " (" + messageTime + "): " + messageText);
+                    AddSingleMessage(ownMessage, messageText, currentChatTable, false);
 
-                    var bubble = document.createElement("div");
-                    bubble.className = ownMessage ? "OwnMessage" : "OtherMessage";
-                    bubble.innerHTML = messageText;
-
-                    var row = currentChatTable.insertRow(-1);
-                    row.insertCell(-1).appendChild(bubble);
-
-                    //currentChatTable.appendChild(bubble);
+                    chatObject.lastMessageId = message.id;
                 }
                 else {
-                    console.log("har redan detta medelande");
                 }
             }
 
@@ -207,5 +232,17 @@ async function GetAuthorName(id) {
     var response = JSON.parse(await api.GetUserInfo(id));
     if (response["success"]) {
         knownAuthors.push({ name: response["message"]["username"], id: id });
+    }
+}
+
+async function LoadCurrentChatTick() {
+    if (currentChat) {
+        if (justSent) {
+            justSent = false;
+            setTimeout(function () { LoadCurrentChat(); }, 500);
+        }
+        else {
+            LoadCurrentChat();
+        }
     }
 }

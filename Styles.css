@@ -211,7 +211,7 @@ input[type=text], select {
     padding: 20px;
     border: 0px solid #ccc;
     border-top: none;
-    animation: fadeIn 1s;
+    animation: fadeIn 0.3s;
 }
 
 .UserList {
@@ -232,6 +232,36 @@ input[type=text], select {
     --pink: #E98074;
     --pink-light: #ea8b80;
     --red: #E85A4F;
+}
+
+@keyframes scaleUp {
+    0% {
+        font-size: 0%;
+    }
+
+    100% {
+        font-size: 100%;
+    }
+}
+
+@-webkit-keyframes scaleUp {
+    0% {
+        font-size: 0%;
+    }
+
+    100% {
+        font-size: 100%;
+    }
+}
+
+@-moz-keyframes scaleUp {
+    0% {
+        font-size: 0%;
+    }
+
+    100% {
+        font-size: 100%;
+    }
 }
 
 @keyframes fadeIn {
