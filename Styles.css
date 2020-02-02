@@ -69,6 +69,7 @@ body {
     background-color: var(--darker);
     padding: 10px;
     bottom: 0;
+    z-index: 10;
 }
 
 .ChatTextInputContainer {
@@ -356,6 +357,7 @@ input[type=text], select {
     margin-top: 10px;
     animation: fadeIn 1s linear forwards;
     animation-fill-mode: forwards;
+    z-index: -1;
 }
 
 .lds-grid-hidden {
@@ -364,9 +366,7 @@ input[type=text], select {
     width: 80px;
     height: 80px;
     margin-top: 10px;
-    /*visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 2s, opacity 2s linear;*/
+    z-index: -1;
 }
 
     .lds-grid div {
