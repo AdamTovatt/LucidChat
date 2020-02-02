@@ -208,7 +208,7 @@ input[type=text], select {
 
 .TabContent {
     display: none;
-    padding: 20px;
+    padding: 20px 10px;
     border: 0px solid #ccc;
     border-top: none;
     animation: fadeIn 0.3s;
@@ -331,7 +331,7 @@ input[type=text], select {
         width: 16px;
         height: 16px;
         border-radius: 50%;
-        background: #fff;
+        background: var(--gray-light);
         animation: lds-grid 1.2s linear infinite;
     }
 
@@ -343,13 +343,13 @@ input[type=text], select {
 
         .lds-grid div:nth-child(2) {
             top: 8px;
-            left: 32px;
+            left: 30px;
             animation-delay: -0.4s;
         }
 
         .lds-grid div:nth-child(3) {
             top: 8px;
-            left: 56px;
+            left: 52px;
             animation-delay: -0.8s;
         }
 
