@@ -169,7 +169,7 @@ input[type=text], select {
 
 .TabButton {
     background-color: inherit;
-    border: none;
+    border: 0px solid black;
     outline: none;
     cursor: pointer;
     padding: 14px 16px;
@@ -189,7 +189,7 @@ input[type=text], select {
 
 .ActiveTabButton {
     background-color: var(--bright);
-    border: none;
+    border: 0px solid black;
     outline: none;
     cursor: pointer;
     padding: 14px 16px;
