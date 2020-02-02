@@ -42,6 +42,7 @@ window.onload = async function () {
     if (oldUserId) {
         userId = oldUserId;
 
+        screen_CreateUser.style.display = "none";
         OpenUsersTab();
         GetUserChats();
     }
