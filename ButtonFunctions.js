@@ -1,4 +1,5 @@
-function OpenUsersTab(evt, tabId) {
+function OpenUsersTab() {
+    console.log("test");
     var i, tabcontent, tablinks;
 
     tabcontent = document.getElementsByClassName("TabContent");
@@ -11,10 +12,12 @@ function OpenUsersTab(evt, tabId) {
         tablinks[i].className = tablinks[i].className = "TabButton";
     }
 
-    document.getElementById(tabId).style.display = "block";
-    evt.currentTarget.className = "ActiveTabButton";
+    document.getElementById("UserList").style.display = "block";
+    document.getElementById("UserListButton").className = "ActiveTabButton";
 
     chatInputArea.style.display = "none";
+
+    LoadUsers();
 }
 
 function OpenChatTab(chatId) {

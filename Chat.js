@@ -39,7 +39,8 @@ window.onload = async function () {
     if (oldUserId) {
         userId = oldUserId;
 
-        this.LoadUsers();
+        OpenUsersTab();
+        GetUserChats();
     }
 
     this.setInterval(this.GetUserChats, 5000);
@@ -64,23 +65,33 @@ async function EnterChat(username) {
 
     setCookie("userId", userId, 2);
 
-    LoadUsers();
+    GetUserChats();
 }
 
 async function LoadUsers() {
     var users = JSON.parse(await api.GetUsers());
 
     if (users["success"]) {
-
         var userList = document.getElementById("UserList");
         userList.innerHTML = "";
         var table = document.createElement("table");
         table.className = "UserList";
 
+        activeUsers = [];
+
         for (var i = 0; i < users.message.length; i++) {
+            users.message[i].minutesAfk = ((new Date()) - new Date(users.message[i].lastactive)) / (1000 * 60);
+            if (users.message[i].minutesAfk < 30)
+                activeUsers.push(users.message[i]);
+        }
+
+        activeUsers.sort((a, b) => a.minutesAfk - b.minutesAfk);
+
+        for (var i = 0; i < activeUsers.length; i++) {
+            console.log(activeUsers[i].minutesAfk < 30);
             var tr = table.insertRow(-1);
-            var name = users.message[i]["username"];
-            var id = users.message[i]["id"];
+            var name = activeUsers[i].username;
+            var id = activeUsers[i].id;
             if (id != userId)
                 tr.insertCell(-1).innerHTML = '<button class="Button" onclick="OpenNewChat(\'' + name + '\', \'' + id + '\')">' + name + '</button>';
         }
@@ -89,10 +100,6 @@ async function LoadUsers() {
 
         screen_CreateUser.style.display = "none";
         screen_Chat.style.display = "block";
-
-        document.getElementById("UserListButton").click();
-
-        GetUserChats();
     }
     else {
         alert("Okänt fel när användare skulle hämtas");
