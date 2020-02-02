@@ -34,6 +34,16 @@ window.onload = async function () {
             }
         }
     });
+
+    var oldUserId = getCookie("userId");
+    if (oldUserId) {
+        userId = oldUserId;
+
+        this.LoadUsers();
+    }
+
+    this.setInterval(this.GetUserChats, 5000);
+    this.setInterval(this.LoadCurrentChatTick, 4000);
 }
 
 async function EnterChat(username) {
@@ -52,6 +62,12 @@ async function EnterChat(username) {
 
     userId = response["id"];
 
+    setCookie("userId", userId, 2);
+
+    LoadUsers();
+}
+
+async function LoadUsers() {
     var users = JSON.parse(await api.GetUsers());
 
     if (users["success"]) {
@@ -77,8 +93,6 @@ async function EnterChat(username) {
         document.getElementById("UserListButton").click();
 
         GetUserChats();
-        this.setInterval(this.GetUserChats, 5000);
-        this.setInterval(this.LoadCurrentChatTick, 4000);
     }
     else {
         alert("Okänt fel när användare skulle hämtas");
