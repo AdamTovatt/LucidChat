@@ -156,6 +156,7 @@ function AddChatButton(chat) {
 
     screen_Chat.appendChild(div);
     div.innerHTML += '<div id="chatTyping_' + chat.id + '" class="lds-grid"><div></div><div></div><div></div>';
+    div.innerHTML += '<div style="height: 8em"></div>'
 
     var chat = GetChatById(chat.id);
     if (chat)
