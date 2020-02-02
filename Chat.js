@@ -15,6 +15,9 @@ var knownAuthors = [];
 var justSent = false;
 var sentBubbles = [];
 
+var usersScreenActive = false;
+var lastTypeSend = new Date();
+
 window.onload = async function () {
     screen_CreateUser = document.getElementById("Screen_CreateUser");
     screen_Chat = document.getElementById("Screen_Chat");
@@ -43,8 +46,10 @@ window.onload = async function () {
         GetUserChats();
     }
 
-    this.setInterval(this.GetUserChats, 5000);
-    this.setInterval(this.LoadCurrentChatTick, 4000);
+    this.setInterval(this.GetUserChats, 5500);
+    this.setInterval(this.LoadCurrentChatTick, 2000);
+    this.setInterval(this.UserHeartBeat, 60000);
+    this.setInterval(this.RefreshUsersTick, 11000);
 }
 
 async function EnterChat(username) {
@@ -150,6 +155,7 @@ function AddChatButton(chat) {
     div.appendChild(chatTable);
 
     screen_Chat.appendChild(div);
+    div.innerHTML += '<div class="lds-grid"><div></div><div></div><div></div>';
 
     var chat = GetChatById(chat.id);
     if (chat)
@@ -265,5 +271,11 @@ async function LoadCurrentChatTick() {
         else {
             LoadCurrentChat();
         }
+    }
+}
+
+async function RefreshUsersTick() {
+    if (usersScreenActive) {
+        LoadUsers();
     }
 }

@@ -1,5 +1,5 @@
 function OpenUsersTab() {
-    console.log("test");
+    usersScreenActive = true;
     var i, tabcontent, tablinks;
 
     tabcontent = document.getElementsByClassName("TabContent");
@@ -21,6 +21,7 @@ function OpenUsersTab() {
 }
 
 function OpenChatTab(chatId) {
+    usersScreenActive = false;
     var tabcontent = document.getElementsByClassName("TabContent");
     for (var i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
@@ -73,4 +74,12 @@ async function SendChat() {
     var row = AddSingleMessage(true, text, document.getElementById("chatTable_" + currentChat), true);
     sentBubbles.push(row);
     justSent = true;
+}
+
+async function UserTyped() {
+    var time = new Date() - lastTypeSend;
+    if (time > 1000 * 5) {
+        lastTypeSend = new Date();
+        await api.UserTyping(currentChat, userId);
+    }
 }
